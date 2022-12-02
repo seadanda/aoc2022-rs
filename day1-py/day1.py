@@ -1,7 +1,7 @@
 elf_totals = []
 current_total = 0
 
-with open('inputs/day1.txt') as f:
+with open('input/day1.txt') as f:
     for line in f:
         try:
             current_total += int(line)
