@@ -1,18 +1,12 @@
-use std::fs::File;
-use std::io::{BufRead, BufReader};
-
-pub fn read_file(filename: &str) -> BufReader<File> {
-    let file = File::open(filename).unwrap();
-    BufReader::new(file)
-}
+use super::read_file;
 
 pub fn get_elf_totals(filename: &str) -> Vec<i32> {
-    let reader = read_file(filename);
+    let lines = read_file(filename);
 
     let mut elf_totals: Vec<i32> = Vec::new();
     let mut current_total: i32 = 0;
 
-    for line in reader.lines() {
+    for line in lines {
         let line = line.unwrap();
         let line = line.trim();
         if line.is_empty() {
