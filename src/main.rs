@@ -21,4 +21,5 @@ fn main() {
 
     let f_day3 = "input/day3.txt";
     println!("Day2.1: {}", day3::get_priority_sum(f_day3));
+    println!("Day2.2: {}", day3::get_group_priority_sum(f_day3));
 }

@@ -34,8 +34,42 @@ pub fn get_priority_sum(filename: &str) -> i32 {
     sum
 }
 
+pub fn find_shared_char(group: Vec<String>) -> char {
+    group[0]
+        .chars()
+        .find(|c| group.iter().all(|s| s.contains(*c)))
+        .unwrap()
+}
+
+pub fn get_group_priority_sum(filename: &str) -> i32 {
+    let mut sum = 0;
+
+    let lines = read_file(filename)
+        .map(|l| l.unwrap())
+        .collect::<Vec<String>>();
+
+    for i in 0..lines.len() / 3 {
+        let line_trio = lines
+            .iter()
+            .skip(i * 3)
+            .take(3)
+            .map(|l| l.to_string())
+            .collect::<Vec<String>>();
+
+        let c = find_shared_char(line_trio);
+        let priority = evaluate_char_priority(c);
+        sum += priority;
+    }
+    sum
+}
+
 mod tests {
     use super::*;
+
+    #[test]
+    fn test_get_group_priority_sum() {
+        assert_eq!(get_group_priority_sum("input/day3.test"), 70);
+    }
 
     #[test]
     fn test_get_priority_sum() {
@@ -43,16 +77,18 @@ mod tests {
     }
 
     #[test]
-    fn test_evaluate_char_priority() {
+    fn test_evaluate_char_priority_lower() {
+        assert_eq!(evaluate_char_priority('p'), 16);
+    }
+
+    #[test]
+    fn test_evaluate_char_priority_capital() {
         assert_eq!(evaluate_char_priority('A'), 27);
     }
 
     #[test]
     fn test_find_repeated_char() {
-        assert_eq!(
-            find_repeated_char("vJrwpWtwJgWrhcsFMMfFFhFp"),
-            'p'
-        );
+        assert_eq!(find_repeated_char("vJrwpWtwJgWrhcsFMMfFFhFp"), 'p');
     }
 
     #[test]
@@ -68,5 +104,4 @@ mod tests {
         let lines = read_file("input/day3.test");
         assert_eq!(lines.count(), 6);
     }
-
 }
