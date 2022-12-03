@@ -12,5 +12,9 @@ pub fn read_file(filename: &str) -> Lines<BufReader<File>> {
 fn main() {
     let f_day1 = "input/day1.txt";
     println!("Day1.1: {}", day1::get_max(f_day1));
-    println!("Day1.1: {}", day1::get_top_three_sum(f_day1));
+    println!("Day1.2: {}", day1::get_top_three_sum(f_day1));
+
+    let f_day1 = "input/day2.txt";
+    println!("Day2.1: {}", day2::get_score(f_day1));
+    println!("Day2.2: {}", day2::get_corrected_score(f_day1));
 }
