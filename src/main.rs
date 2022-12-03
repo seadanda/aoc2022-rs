@@ -1,5 +1,6 @@
 mod day1;
 mod day2;
+mod day3;
 
 use std::fs::File;
 use std::io::{BufRead, BufReader, Lines};
@@ -17,4 +18,7 @@ fn main() {
     let f_day1 = "input/day2.txt";
     println!("Day2.1: {}", day2::get_score(f_day1));
     println!("Day2.2: {}", day2::get_corrected_score(f_day1));
+
+    let f_day3 = "input/day3.txt";
+    println!("Day2.1: {}", day3::get_priority_sum(f_day3));
 }
