@@ -63,6 +63,7 @@ pub fn get_group_priority_sum(filename: &str) -> i32 {
     sum
 }
 
+#[cfg(test)]
 mod tests {
     use super::*;
 

@@ -87,12 +87,13 @@ pub fn get_corrected_score(filename: &str) -> i32 {
     total
 }
 
+#[cfg(test)]
 mod tests {
     use super::*;
 
     #[test]
     fn test_get_corrected_score() {
-        assert_eq!(get_corrected_score("input/day2.txt"), 12);
+        assert_eq!(get_corrected_score("input/day2.test"), 12);
     }
 
     #[test]
