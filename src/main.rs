@@ -1,6 +1,7 @@
 mod day1;
 mod day2;
 mod day3;
+mod day4;
 
 use std::fs::File;
 use std::io::{BufRead, BufReader, Lines};
@@ -20,6 +21,9 @@ fn main() {
     println!("Day2.2: {}", day2::get_corrected_score(f_day1));
 
     let f_day3 = "input/day3.txt";
-    println!("Day2.1: {}", day3::get_priority_sum(f_day3));
-    println!("Day2.2: {}", day3::get_group_priority_sum(f_day3));
+    println!("Day3.1: {}", day3::get_priority_sum(f_day3));
+    println!("Day3.2: {}", day3::get_group_priority_sum(f_day3));
+
+    let f_day4 = "input/day4.txt";
+    println!("Day4.1: {}", day4::get_intersecting_sum(f_day4));
 }
