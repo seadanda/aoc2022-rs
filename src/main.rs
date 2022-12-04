@@ -25,5 +25,6 @@ fn main() {
     println!("Day3.2: {}", day3::get_group_priority_sum(f_day3));
 
     let f_day4 = "input/day4.txt";
-    println!("Day4.1: {}", day4::get_intersecting_sum(f_day4));
+    println!("Day4.1: {}", day4::get_intersecting_sum(f_day4, false));
+    println!("Day4.2: {}", day4::get_intersecting_sum(f_day4, true));
 }
