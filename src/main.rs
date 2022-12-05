@@ -30,5 +30,6 @@ fn main() {
     println!("Day4.2: {}", day4::get_intersecting_sum(f_day4, true));
 
     let f_day5 = "input/day5.txt";
-    println!("Day5.1: {}", day5::get_final_top_crates(f_day5));
+    println!("Day5.1: {}", day5::get_part1_top_crates(f_day5));
+    println!("Day5.2: {}", day5::get_part2_top_crates(f_day5));
 }

@@ -92,7 +92,7 @@ pub fn get_top_crates(final_state: Vec<String>) -> String {
         .collect::<String>()
 }
 
-pub fn get_final_top_crates(filename: &str) -> String {
+pub fn get_part1_top_crates(filename: &str) -> String {
     // read in file
     let lines = read_file(filename);
     // parse input to get initial state and instructions
@@ -103,13 +103,63 @@ pub fn get_final_top_crates(filename: &str) -> String {
     get_top_crates(final_state)
 }
 
+pub fn move_crates_9001(initial_state: Vec<String>, instructions: Vec<[usize; 3]>) -> Vec<String> {
+    let mut state = initial_state
+        .iter()
+        .map(|s| s.chars().collect())
+        .collect::<Vec<Vec<char>>>();
+
+    for [number, from, to] in instructions {
+        let length = state[from - 1].len();
+        let mut crates = state[from - 1].split_off(length - number);
+        state[to - 1].append(&mut crates)
+    }
+
+    state
+        .iter()
+        .map(|v| v.iter().map(|&c| c.to_string()).collect::<String>())
+        .collect::<Vec<String>>()
+}
+
+pub fn get_part2_top_crates(filename: &str) -> String {
+    // read in file
+    let lines = read_file(filename);
+    // parse input to get initial state and instructions
+    let (initial_state, instructions) = parse_input(lines);
+    // move crates
+    let final_state = move_crates_9001(initial_state, instructions);
+    // take top crate of each stack
+    get_top_crates(final_state)
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
 
     #[test]
-    fn test_get_final_top_crates() {
-        assert_eq!(get_final_top_crates("input/day5.test"), "CMZ")
+    fn test_get_part2_top_crates() {
+        assert_eq!(get_part2_top_crates("input/day5.test"), "MCD")
+    }
+
+    #[test]
+    fn test_move_crates_9001() {
+        let initial_state = vec!["A", "BC", "D"]
+            .iter()
+            .map(|&s| s.to_string())
+            .collect::<Vec<String>>();
+        let instructions = vec![[2, 2, 1]];
+
+        let final_state = vec!["ABC", "", "D"]
+            .iter()
+            .map(|&s| s.to_string())
+            .collect::<Vec<String>>();
+
+        assert_eq!(move_crates_9001(initial_state, instructions), final_state);
+    }
+
+    #[test]
+    fn test_get_part1_top_crates() {
+        assert_eq!(get_part1_top_crates("input/day5.test"), "CMZ")
     }
 
     #[test]
@@ -125,13 +175,13 @@ mod tests {
 
     #[test]
     fn test_move_crates() {
-        let initial_state = vec!["A", "B", "C"]
+        let initial_state = vec!["A", "BC", "D"]
             .iter()
             .map(|&s| s.to_string())
             .collect::<Vec<String>>();
-        let instructions = vec![[1, 2, 1]];
+        let instructions = vec![[2, 2, 1]];
 
-        let final_state = vec!["AB", "", "C"]
+        let final_state = vec!["ACB", "", "D"]
             .iter()
             .map(|&s| s.to_string())
             .collect::<Vec<String>>();
@@ -147,7 +197,10 @@ mod tests {
             .map(|&s| s.to_string())
             .collect::<Vec<String>>();
         let output_instructions = vec![[1, 2, 1], [3, 1, 3], [2, 2, 1], [1, 1, 2]];
-        assert_eq!(parse_input(lines), (output_initial_state, output_instructions));
+        assert_eq!(
+            parse_input(lines),
+            (output_initial_state, output_instructions)
+        );
     }
 
     #[test]
