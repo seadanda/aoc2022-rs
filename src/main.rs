@@ -2,6 +2,7 @@ mod day1;
 mod day2;
 mod day3;
 mod day4;
+mod day5;
 
 use std::fs::File;
 use std::io::{BufRead, BufReader, Lines};
@@ -27,4 +28,7 @@ fn main() {
     let f_day4 = "input/day4.txt";
     println!("Day4.1: {}", day4::get_intersecting_sum(f_day4, false));
     println!("Day4.2: {}", day4::get_intersecting_sum(f_day4, true));
+
+    let f_day5 = "input/day5.txt";
+    println!("Day5.1: {}", day5::get_final_top_crates(f_day5));
 }
