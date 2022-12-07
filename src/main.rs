@@ -3,6 +3,7 @@ mod day2;
 mod day3;
 mod day4;
 mod day5;
+mod day6;
 
 use std::fs::File;
 use std::io::{BufRead, BufReader, Lines};
@@ -32,4 +33,9 @@ fn main() {
     let f_day5 = "input/day5.txt";
     println!("Day5.1: {}", day5::get_part1_top_crates(f_day5));
     println!("Day5.2: {}", day5::get_part2_top_crates(f_day5));
+
+    let f_day6 = "input/day6.txt";
+    let day6_input = read_file(f_day6).next().unwrap().unwrap();
+    println!("Day6.1: {}", day6::get_marker_pos(&day6_input, 4));
+    println!("Day6.2: {}", day6::get_marker_pos(&day6_input, 14));
 }
