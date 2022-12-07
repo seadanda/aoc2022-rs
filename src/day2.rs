@@ -1,3 +1,5 @@
+use std::error::Error;
+
 use super::read_file;
 
 pub fn get_line_score(line: &str) -> i32 {
@@ -63,28 +65,26 @@ pub fn get_corrected_line_score(line: &str) -> i32 {
     score
 }
 
-#[allow(dead_code)]
-pub fn get_score(filename: &str) -> i32 {
-    let lines = read_file(filename);
+pub fn get_score(filename: &str) -> Result<i32, Box<dyn Error>> {
+    let lines = read_file(filename)?;
     let mut total = 0;
     for line in lines {
-        let line = line.unwrap();
+        let line = line?;
         let score = get_line_score(&line);
         total += score;
     }
-    total
+    Ok(total)
 }
 
-#[allow(dead_code)]
-pub fn get_corrected_score(filename: &str) -> i32 {
-    let lines = read_file(filename);
+pub fn get_corrected_score(filename: &str) -> Result<i32, Box<dyn Error>> {
+    let lines = read_file(filename)?;
     let mut total = 0;
     for line in lines {
-        let line = line.unwrap();
+        let line = line?;
         let score = get_corrected_line_score(&line);
         total += score;
     }
-    total
+    Ok(total)
 }
 
 #[cfg(test)]
@@ -93,7 +93,7 @@ mod tests {
 
     #[test]
     fn test_get_corrected_score() {
-        assert_eq!(get_corrected_score("input/day2.test"), 12);
+        assert_eq!(get_corrected_score("input/day2.test").unwrap(), 12);
     }
 
     #[test]
@@ -103,7 +103,7 @@ mod tests {
 
     #[test]
     fn test_get_score() {
-        assert_eq!(get_score("input/day2.test"), 15);
+        assert_eq!(get_score("input/day2.test").unwrap(), 15);
     }
 
     #[test]
@@ -114,7 +114,7 @@ mod tests {
     #[test]
     fn test_read_file() {
         let f = "input/day2.test";
-        let lines = read_file(f);
+        let lines = read_file(f).unwrap();
         assert_eq!(lines.count(), 3);
     }
 }

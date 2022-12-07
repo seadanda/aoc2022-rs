@@ -1,3 +1,5 @@
+use std::error::Error;
+
 use super::read_file;
 
 pub fn parse_series(s: &str) -> Vec<i32> {
@@ -29,17 +31,17 @@ pub fn is_partial_intersecting_set(line: &str) -> bool {
     test.is_some()
 }
 
-pub fn get_intersecting_sum(filename: &str, allow_partial: bool) -> i32 {
-    let lines = read_file(filename);
+pub fn get_intersecting_sum(filename: &str, allow_partial: bool) -> Result<i32, Box<dyn Error>> {
+    let lines = read_file(filename)?;
     let mut sum = 0;
 
     for line in lines {
-        let line = line.unwrap();
+        let line = line?;
         if (allow_partial && is_partial_intersecting_set(&line)) || is_intersecting_set(&line) {
             sum += 1;
         }
     }
-    sum
+    Ok(sum)
 }
 
 #[cfg(test)]
@@ -48,7 +50,7 @@ mod tests {
 
     #[test]
     fn test_get_partial_intersecting_sum() {
-        assert_eq!(get_intersecting_sum("input/day4.test", true), 4)
+        assert_eq!(get_intersecting_sum("input/day4.test", true).unwrap(), 4)
     }
 
     #[test]
@@ -63,7 +65,7 @@ mod tests {
 
     #[test]
     fn test_get_intersecting_sum() {
-        assert_eq!(get_intersecting_sum("input/day4.test", false), 2)
+        assert_eq!(get_intersecting_sum("input/day4.test", false).unwrap(), 2)
     }
 
     #[test]
@@ -83,7 +85,7 @@ mod tests {
 
     #[test]
     fn test_day4() {
-        let lines = read_file("input/day4.test");
+        let lines = read_file("input/day4.test").unwrap();
         assert_eq!(lines.count(), 6);
     }
 }

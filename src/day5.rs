@@ -1,6 +1,6 @@
 use std::{
     fs::File,
-    io::{BufReader, Lines},
+    io::{BufReader, Lines}, error::Error,
 };
 
 use super::read_file;
@@ -92,15 +92,15 @@ pub fn get_top_crates(final_state: Vec<String>) -> String {
         .collect::<String>()
 }
 
-pub fn get_part1_top_crates(filename: &str) -> String {
+pub fn get_part1_top_crates(filename: &str) -> Result<String, Box<dyn Error>> {
     // read in file
-    let lines = read_file(filename);
+    let lines = read_file(filename)?;
     // parse input to get initial state and instructions
     let (initial_state, instructions) = parse_input(lines);
     // move crates
     let final_state = move_crates(initial_state, instructions);
     // take top crate of each stack
-    get_top_crates(final_state)
+    Ok(get_top_crates(final_state))
 }
 
 pub fn move_crates_9001(initial_state: Vec<String>, instructions: Vec<[usize; 3]>) -> Vec<String> {
@@ -121,15 +121,15 @@ pub fn move_crates_9001(initial_state: Vec<String>, instructions: Vec<[usize; 3]
         .collect::<Vec<String>>()
 }
 
-pub fn get_part2_top_crates(filename: &str) -> String {
+pub fn get_part2_top_crates(filename: &str) -> Result<String, Box<dyn Error>> {
     // read in file
-    let lines = read_file(filename);
+    let lines = read_file(filename)?;
     // parse input to get initial state and instructions
     let (initial_state, instructions) = parse_input(lines);
     // move crates
     let final_state = move_crates_9001(initial_state, instructions);
     // take top crate of each stack
-    get_top_crates(final_state)
+    Ok(get_top_crates(final_state))
 }
 
 #[cfg(test)]
@@ -138,7 +138,7 @@ mod tests {
 
     #[test]
     fn test_get_part2_top_crates() {
-        assert_eq!(get_part2_top_crates("input/day5.test"), "MCD")
+        assert_eq!(get_part2_top_crates("input/day5.test").unwrap(), "MCD")
     }
 
     #[test]
@@ -159,7 +159,7 @@ mod tests {
 
     #[test]
     fn test_get_part1_top_crates() {
-        assert_eq!(get_part1_top_crates("input/day5.test"), "CMZ")
+        assert_eq!(get_part1_top_crates("input/day5.test").unwrap(), "CMZ")
     }
 
     #[test]
@@ -191,7 +191,7 @@ mod tests {
 
     #[test]
     fn test_parse_input() {
-        let lines = read_file("input/day5.test");
+        let lines = read_file("input/day5.test").unwrap();
         let output_initial_state = vec!["ZN", "MCD", "P"]
             .iter()
             .map(|&s| s.to_string())
@@ -234,6 +234,6 @@ mod tests {
 
     #[test]
     fn test_read_file() {
-        assert_eq!(read_file("input/day5.test").count(), 9);
+        assert_eq!(read_file("input/day5.test").unwrap().count(), 9);
     }
 }

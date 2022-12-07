@@ -1,3 +1,5 @@
+use std::error::Error;
+
 use super::read_file;
 
 pub fn split_rucksack(line: &str) -> (String, String) {
@@ -22,16 +24,16 @@ pub fn evaluate_char_priority(c: char) -> i32 {
     }
 }
 
-pub fn get_priority_sum(filename: &str) -> i32 {
+pub fn get_priority_sum(filename: &str) -> Result<i32, Box<dyn Error>> {
     let mut sum = 0;
 
-    for line in read_file(filename) {
-        let line = line.unwrap();
+    for line in read_file(filename)? {
+        let line = line?;
         let c = find_repeated_char(&line);
         let priority = evaluate_char_priority(c);
         sum += priority;
     }
-    sum
+    Ok(sum)
 }
 
 pub fn find_shared_char(group: Vec<String>) -> char {
@@ -41,10 +43,10 @@ pub fn find_shared_char(group: Vec<String>) -> char {
         .unwrap()
 }
 
-pub fn get_group_priority_sum(filename: &str) -> i32 {
+pub fn get_group_priority_sum(filename: &str) -> Result<i32, Box<dyn Error>> {
     let mut sum = 0;
 
-    let lines = read_file(filename)
+    let lines = read_file(filename)?
         .map(|l| l.unwrap())
         .collect::<Vec<String>>();
 
@@ -53,14 +55,14 @@ pub fn get_group_priority_sum(filename: &str) -> i32 {
             .iter()
             .skip(i * 3)
             .take(3)
-            .map(|l| l.to_string())
+            .map(|l| l.to_owned())
             .collect::<Vec<String>>();
 
         let c = find_shared_char(line_trio);
         let priority = evaluate_char_priority(c);
         sum += priority;
     }
-    sum
+    Ok(sum)
 }
 
 #[cfg(test)]
@@ -69,12 +71,12 @@ mod tests {
 
     #[test]
     fn test_get_group_priority_sum() {
-        assert_eq!(get_group_priority_sum("input/day3.test"), 70);
+        assert_eq!(get_group_priority_sum("input/day3.test").unwrap(), 70);
     }
 
     #[test]
     fn test_get_priority_sum() {
-        assert_eq!(get_priority_sum("input/day3.test"), 157);
+        assert_eq!(get_priority_sum("input/day3.test").unwrap(), 157);
     }
 
     #[test]
@@ -103,6 +105,6 @@ mod tests {
     #[test]
     fn test_file_read() {
         let lines = read_file("input/day3.test");
-        assert_eq!(lines.count(), 6);
+        assert_eq!(lines.unwrap().count(), 6);
     }
 }
