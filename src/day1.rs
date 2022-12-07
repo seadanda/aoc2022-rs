@@ -70,6 +70,6 @@ mod tests {
 
     #[test]
     fn test_read_file() {
-        read_file("input/day1.test");
+        read_file("input/day1.test").unwrap();
     }
 }
