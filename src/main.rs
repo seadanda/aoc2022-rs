@@ -4,6 +4,7 @@ mod day3;
 mod day4;
 mod day5;
 mod day6;
+mod day7;
 
 use std::fs::File;
 use std::fs::read_to_string;
@@ -39,4 +40,8 @@ fn main() {
     let day6_input = read_to_string(f_day6).unwrap();
     println!("Day6.1: {}", day6::get_marker_pos(&day6_input, 4));
     println!("Day6.2: {}", day6::get_marker_pos(&day6_input, 14));
+
+    let f_day7 = "input/day7.txt";
+    println!("Day7.1: {}", day7::get_directory_sum_under(f_day7, 100000).unwrap());
+    println!("Day7.2: {}", day7::choose_directory_with_size(f_day7, 2805968).unwrap());
 }
