@@ -1,9 +1,9 @@
+use super::E;
+use std::fs::read_to_string;
 use std::path::PathBuf;
-use std::{error::Error, fs::read_to_string};
 
 type Files = Vec<(usize, String)>;
 type Tree = Vec<(PathBuf, Files)>;
-type E = Box<dyn Error>;
 
 pub fn parse_input(filename: &str) -> Result<Tree, E> {
     let repl = read_to_string(filename)?;
@@ -95,7 +95,7 @@ pub fn choose_directory_with_size(filename: &str, limit: usize) -> Result<usize,
     dirs.sort_by(|(s1, _), (s2, _)| s1.cmp(s2));
 
     // find first gte limit
-    let (dirsize, _)= *dirs.iter().find(|(s, _)| *s >= limit).unwrap();
+    let (dirsize, _) = *dirs.iter().find(|(s, _)| *s >= limit).unwrap();
 
     Ok(dirsize)
 }

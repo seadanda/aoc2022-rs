@@ -5,12 +5,16 @@ mod day4;
 mod day5;
 mod day6;
 mod day7;
+mod day8;
 
-use std::fs::File;
+use std::error::Error;
 use std::fs::read_to_string;
+use std::fs::File;
 use std::io::{BufRead, BufReader, Lines};
 
-pub fn read_file(filename: &str) -> Result<Lines<BufReader<File>>, std::io::Error> {
+type E = Box<dyn Error>;
+
+pub fn read_file(filename: &str) -> Result<Lines<BufReader<File>>, E> {
     let file = File::open(filename)?;
     Ok(BufReader::new(file).lines())
 }
@@ -29,8 +33,14 @@ fn main() {
     println!("Day3.2: {}", day3::get_group_priority_sum(f_day3).unwrap());
 
     let f_day4 = "input/day4.txt";
-    println!("Day4.1: {}", day4::get_intersecting_sum(f_day4, false).unwrap());
-    println!("Day4.2: {}", day4::get_intersecting_sum(f_day4, true).unwrap());
+    println!(
+        "Day4.1: {}",
+        day4::get_intersecting_sum(f_day4, false).unwrap()
+    );
+    println!(
+        "Day4.2: {}",
+        day4::get_intersecting_sum(f_day4, true).unwrap()
+    );
 
     let f_day5 = "input/day5.txt";
     println!("Day5.1: {}", day5::get_part1_top_crates(f_day5).unwrap());
@@ -42,6 +52,16 @@ fn main() {
     println!("Day6.2: {}", day6::get_marker_pos(&day6_input, 14));
 
     let f_day7 = "input/day7.txt";
-    println!("Day7.1: {}", day7::get_directory_sum_under(f_day7, 100000).unwrap());
-    println!("Day7.2: {}", day7::choose_directory_with_size(f_day7, 2805968).unwrap());
+    println!(
+        "Day7.1: {}",
+        day7::get_directory_sum_under(f_day7, 100000).unwrap()
+    );
+    println!(
+        "Day7.2: {}",
+        day7::choose_directory_with_size(f_day7, 2805968).unwrap()
+    );
+
+    let f_day8 = "input/day8.txt";
+    println!("Day8.1: {}", day8::check_forest_visibility(f_day8).unwrap());
+    println!("Day8.2: {}", day8::find_max_scenic_score(f_day8).unwrap());
 }
