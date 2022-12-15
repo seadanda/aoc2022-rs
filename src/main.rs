@@ -6,6 +6,7 @@ mod day5;
 mod day6;
 mod day7;
 mod day8;
+mod day9;
 
 use std::error::Error;
 use std::fs::read_to_string;
@@ -64,4 +65,7 @@ fn main() {
     let f_day8 = "input/day8.txt";
     println!("Day8.1: {}", day8::check_forest_visibility(f_day8).unwrap());
     println!("Day8.2: {}", day8::find_max_scenic_score(f_day8).unwrap());
+
+    let f_day9 = "input/day9.txt";
+    println!("Day9.1: {}", day9::count_tail_positions(f_day9).unwrap());
 }
